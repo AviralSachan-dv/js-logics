@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-Jan</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>User Details Table</h2>
+
+    <div id="tableContainer"></div>
+
+    <script>
+        const userDetails = [
+            { id: "100", name: "Alice", age: 19, email: "alice@gmail.com" },
+            { id: "101", name: "Bob", age: 19, email: "bob@gmail.com" },
+        ];
+
+        const userAddressDetails = [
+            { id: "100", state: "MP", city: "Bhopal" },
+            { id: "101", state: "UP", city: "Indore" },
+        ];
+
+        const userAttendanceDetails = [
+            { id: "100", date: "2025-01-14", status: "P" },
+            { id: "101", date: "2025-01-14", status: "P" },
+        ];
+
+        const user = userDetails.map(user => {
+            const address = userAddressDetails.find(address => address.id === user.id);
+            const attendance = userAttendanceDetails.find(attendance => attendance.id === user.id);
+
+            return {
+                ...user,
+                ...address,
+                ...attendance
+            };
+        });
+
+     
+        function createTable(data) {
+           
+            const table = document.createElement("table");
+            const tableBody = document.createElement("tbody");
+
+            
+            const headers = ["ID", "Name", "Age", "Email", "State", "City", "Attendance Date", "Status"];
+
+            
+            const headerRow = document.createElement("tr");
+            headers.forEach(header => {
+                const th = document.createElement("th");
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            table.appendChild(headerRow);
+
+           
+            data.forEach(user => {
+                const row = document.createElement("tr");
+                
+              
+                Object.values(user).forEach(value => {
+                    const cell = document.createElement("td");
+                    cell.textContent = value;
+                    row.appendChild(cell);
+                });
+
+                tableBody.appendChild(row);
+            });
+
+            
+            table.appendChild(tableBody);
+
+            
+            document.getElementById("tableContainer").appendChild(table);
+        }
+
+        
+        createTable(user);
+    </script>
+</body>
+</html>
+ --fot
